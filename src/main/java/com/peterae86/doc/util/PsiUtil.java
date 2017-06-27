@@ -42,6 +42,9 @@ public class PsiUtil {
 
     public static JavaDoc getDoc(PsiDocComment psiDocComment) {
         JavaDoc javaDoc = new JavaDoc();
+        if(psiDocComment==null){
+            return null;
+        }
         PsiDocTokenImpl descriptionElements = getByType(psiDocComment.getDescriptionElements(), PsiDocTokenImpl.class);
         javaDoc.setDesc(descriptionElements.getText());
         PsiDocTag[] tags = psiDocComment.getTags();

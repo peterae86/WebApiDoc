@@ -42,10 +42,6 @@ public class HelloAction extends BaseCodeInsightAction {
                     }
 
                 }
-
-
-
-
                 JavaDoc doc = PsiUtil.getDoc(docComment);
             }
         };
