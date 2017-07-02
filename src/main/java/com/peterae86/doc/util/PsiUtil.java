@@ -1,16 +1,19 @@
 package com.peterae86.doc.util;
 
 import com.google.common.collect.Lists;
+import com.intellij.psi.CommonClassNames;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.impl.source.javadoc.PsiDocTokenImpl;
+import com.intellij.psi.PsiType;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.javadoc.PsiDocTag;
-import com.peterae86.doc.javadoc.JavaDoc;
+import com.intellij.psi.util.PsiTypesUtil;
+import com.peterae86.doc.module.psi.DocTag;
+import com.peterae86.doc.module.psi.JavaDoc;
+import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -42,15 +45,26 @@ public class PsiUtil {
 
     public static JavaDoc getDoc(PsiDocComment psiDocComment) {
         JavaDoc javaDoc = new JavaDoc();
-        if(psiDocComment==null){
-            return null;
+        if (psiDocComment == null) {
+            return javaDoc;
         }
-        PsiDocTokenImpl descriptionElements = getByType(psiDocComment.getDescriptionElements(), PsiDocTokenImpl.class);
-        javaDoc.setDesc(descriptionElements.getText());
+        String content = joinElementsText(psiDocComment.getDescriptionElements());
+        javaDoc.setDesc(content);
         PsiDocTag[] tags = psiDocComment.getTags();
+        List<DocTag> docTags = new ArrayList<>();
         for (PsiDocTag tag : tags) {
-            javaDoc.addTag(tag.getName(), tag.getText());
+            docTags.add(new DocTag(tag.getName(), joinElementsText(tag.getDataElements())));
         }
+        javaDoc.setTags(docTags);
         return javaDoc;
     }
+
+    private static String joinElementsText(PsiElement[] elements) {
+        StringBuilder res = new StringBuilder();
+        for (PsiElement descriptionElement : elements) {
+            res.append(descriptionElement.getText());
+        }
+        return StringUtils.strip(res.toString());
+    }
+
 }

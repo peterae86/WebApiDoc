@@ -1,11 +1,11 @@
-package com.peterae86.doc.javadoc;
+package com.peterae86.doc.module.api;
 
 import java.util.List;
 
 /**
  * Created by test on 2017/6/27.
  */
-public class ApiDesc {
+public class ApiDoc {
     private String name;
     private String desc;
     private String url;
@@ -16,6 +16,8 @@ public class ApiDesc {
     private List<ApiParam> params;
 
     private ApiParam response;
+
+    private List<ApiCode> codes;
 
     public String getName() {
         return name;
@@ -79,5 +81,13 @@ public class ApiDesc {
 
     public void setResponse(ApiParam response) {
         this.response = response;
+    }
+
+    public List<ApiCode> getCodes() {
+        return codes;
+    }
+
+    public void setCodes(List<ApiCode> codes) {
+        this.codes = codes;
     }
 }

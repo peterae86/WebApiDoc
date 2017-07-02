@@ -1,5 +1,6 @@
-package com.peterae86.doc.javadoc;
+package com.peterae86.doc.module.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public class ApiParam {
     private String type;
 
 
-    private List<ApiParam> children;
+    private List<ApiParam> children=new ArrayList<>();
 
     public String getName() {
         return name;
